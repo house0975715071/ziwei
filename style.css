@@ -302,6 +302,56 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 .sh-stars .adj{font-size:13px;color:#8d8475}
 body.no-scroll{overflow:hidden}
 
+/* ---------- 排盤前留姓名電話（lead.js 產生，只有網頁版有） ---------- */
+.lead-backdrop{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;
+  padding:12px 12px calc(12px + env(safe-area-inset-bottom));background:rgba(28,24,18,.55);overscroll-behavior:contain}
+body:has(.lead-backdrop){overflow:hidden}
+/* 下方內距是 0：最後一塊是底部固定區（.lead-foot），由它自己留內距 */
+.lead-dialog{position:relative;width:100%;max-width:460px;max-height:90vh;max-height:90dvh;overflow-y:auto;overflow-x:hidden;
+  background:var(--paper);border:1px solid #e6d3a3;border-top:5px solid var(--gold);border-radius:10px;
+  padding:16px 16px 0;box-shadow:0 12px 40px rgba(0,0,0,.28);overscroll-behavior:contain;
+  overflow-wrap:anywhere;animation:lead-in .16s ease-out}
+@keyframes lead-in{from{transform:translateY(12px)}to{transform:none}}
+.lead-title{font:700 19px/1.4 var(--serif);color:var(--accent);letter-spacing:1px}
+.lead-sub{font-size:14px;line-height:1.6;color:var(--ink2);margin:4px 0 10px}
+.lead-field{display:flex;flex-direction:column;gap:4px;margin-bottom:10px;font-size:14.5px;font-weight:600;color:var(--ink)}
+.lead-field input{width:100%;min-height:46px;padding:8px 10px;font-size:16px;font-weight:400;font-family:var(--sans);
+  border:1px solid #cfc6b4;border-radius:6px;background:#fff;color:var(--ink)}
+/* 每一格自己的錯誤字（姓名、電話、同意）：沒有字就不佔高度；出錯的那一格紅框 */
+.lead-ferr{display:block;font-size:13.5px;line-height:1.5;font-weight:600;color:var(--red)}
+.lead-ferr:empty{display:none}
+.lead-field input[aria-invalid="true"]{border-color:var(--red);box-shadow:0 0 0 1px var(--red);background:#fffafa}
+.lead-agree input[aria-invalid="true"]{outline:2px solid var(--red);outline-offset:2px}
+.lead-foot .lead-ferr{margin:-2px 0 4px 32px}
+/* 防機器人欄位：真人看不到也點不到（不用 display:none，機器人照樣會填） */
+.lead-dialog input.lead-trap{position:absolute;top:0;left:0;width:1px;height:1px;min-height:0;margin:-1px;padding:0;border:0;
+  overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);opacity:0;pointer-events:none;white-space:nowrap}
+.lead-notice{background:#faf6ec;border:1px solid var(--line);border-radius:6px;padding:9px 11px;margin:2px 0 6px;
+  font-size:13px;line-height:1.6;color:var(--ink2)}
+.lead-notice-h{font-weight:700;color:var(--ink);font-size:13.5px;margin-bottom:4px}
+.lead-notice dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:3px 10px;margin:0}
+.lead-notice dt{font-weight:700;color:var(--accent);white-space:nowrap}
+.lead-notice dd{margin:0;min-width:0}
+/* 底部固定區：同意、錯誤、按鈕。告知再長，客人一打開就看得到「同意」和「送出」；
+   底色跟視窗一樣（不透明），捲上來的告知文字會被蓋住、不會疊在按鈕後面；捲到底時它就停在告知下面，不會蓋到告知 */
+.lead-foot{position:sticky;bottom:0;z-index:2;margin:6px -16px 0;padding:6px 16px 12px;
+  background:var(--paper);border-top:1px solid var(--line);box-shadow:0 -6px 12px -10px rgba(0,0,0,.35)}
+.lead-agree{display:flex;align-items:center;gap:10px;min-height:44px;padding:4px 0;font-size:14px;line-height:1.5;cursor:pointer}
+.lead-agree input{flex:0 0 auto;width:22px;height:22px;margin:0;accent-color:var(--accent);cursor:pointer}
+.lead-err{font-size:14px;line-height:1.55;color:var(--red)}
+.lead-err:empty{display:none}
+.lead-err:not(:empty){background:#fbeaea;border:1px solid #e8c3c3;border-radius:6px;padding:8px 10px;margin:4px 0 6px}
+.lead-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.lead-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:44px;padding:8px 16px;
+  border-radius:6px;border:1px solid transparent;font-size:16px;font-weight:600;letter-spacing:1px;line-height:1.35;touch-action:manipulation}
+.lead-btn[disabled]{opacity:.55;cursor:not-allowed}
+.lead-btn-main{flex:1 1 auto;background:var(--gold);border-color:var(--gold);color:#fff}
+.lead-btn-main:not([disabled]):hover{background:var(--gold-d)}
+.lead-btn-ghost{flex:0 0 auto;min-width:88px;background:#fff;color:var(--accent);border-color:var(--line)}
+.lead-btn-ghost:not([disabled]):hover{background:#f7f1e3}
+.lead-btn-skip{width:100%;margin-top:4px;background:transparent;border-color:var(--line);color:var(--accent);
+  font-size:15px;letter-spacing:0;text-decoration:underline;text-underline-offset:3px}
+
 /* ---------- 較寬的螢幕 ---------- */
 @media (min-width:600px){
   .card{padding:20px 22px}
@@ -356,5 +406,6 @@ body.no-scroll{overflow:hidden}
 }
 @media print{
   .site-head,.form-card,#voice-card,.cta,.report-card{display:none}
+  .lead-backdrop{display:none !important}
   body{background:#fff}
 }

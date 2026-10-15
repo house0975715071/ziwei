@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'none'; media-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; manifest-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src https://docs.google.com/forms/d/e/1FAIpQLSc9tF4-HkGywbRBiRi-eltcmsdSBSPZNZwFk8_TBppC_D0hxg/formResponse; media-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; manifest-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="color-scheme" content="light">
 <meta name="theme-color" content="#fdfbf6">
@@ -15,7 +15,7 @@
 <meta property="og:description" content="輸入生日時辰，免費排紫微斗數命盤：五大面向雷達圖、十二宮星狀圖、人生運勢曲線、適合的工作，還能用語音聽解說。生日只在你的手機裡計算，不會上傳。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://house0975715071.github.io/ziwei/">
-<meta property="og:image" content="https://house0975715071.github.io/ziwei/og.png">
+<meta property="og:image" content="https://house0975715071.github.io/ziwei/og.png?v=2dddb9b3">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="紫微斗數 免費排盤：事業・財運・家庭・感情・健康 一次看懂">
@@ -24,9 +24,9 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="紫微斗數免費排盤｜事業財運感情健康一次看懂｜阿良">
 <meta name="twitter:description" content="輸入生日時辰，免費排紫微斗數命盤：五大面向雷達圖、十二宮星狀圖、人生運勢曲線、適合的工作，還能用語音聽解說。生日只在你的手機裡計算，不會上傳。">
-<meta name="twitter:image" content="https://house0975715071.github.io/ziwei/og.png">
+<meta name="twitter:image" content="https://house0975715071.github.io/ziwei/og.png?v=2dddb9b3">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Ccircle cx=%2732%27 cy=%2732%27 r=%2730%27 fill=%27%23b8860b%27/%3E%3Ctext x=%2732%27 y=%2743%27 font-size=%2732%27 text-anchor=%27middle%27 fill=%27%23fff%27 font-family=%27Microsoft JhengHei,sans-serif%27 font-weight=%27700%27%3E%E7%B4%AB%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="style.css?v=e69bf8b5">
+<link rel="stylesheet" href="style.css?v=b40aa440">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -65,7 +65,7 @@
   <!-- ============ 輸入卡 ============ -->
   <section id="form-card" class="card form-card" aria-labelledby="form-h">
     <h2 id="form-h" class="card-h">輸入出生資料</h2>
-    <p class="lock-note"><span class="lock-dot" aria-hidden="true"></span>生日只在你的手機／電腦裡計算，不會上傳；重新整理就清空。</p>
+    <p class="lock-note"><span class="lock-dot" aria-hidden="true"></span>生日只在你的手機／電腦裡計算，不會上傳；重新整理就清空。按開始排盤時，會請你留下姓名和電話給阿良（只送這兩項）。</p>
 
     <form id="birth-form" method="post" novalidate autocomplete="off">
       <div class="field">
@@ -237,6 +237,7 @@
         <li>健康部分只是體質傾向，不能取代醫師診斷。</li>
         <li>分數是為了讓強弱一眼可比，不是吉凶的絕對值。</li>
         <li><b>隱私</b>：你輸入的生日只在你的手機／電腦裡計算，不會送到任何伺服器；本站不用 cookie、不裝統計或追蹤碼；網站主機（GitHub）跟所有網站一樣會記錄連線紀錄。語音用的是你裝置內建的語音；若選到標示「線上」的語音，瀏覽器廠商會收到要念的文字。</li>
+        <li><b>姓名與電話</b>：排盤前請你留的姓名（稱呼）和電話，會送到劉益良（阿良）的 Google 表單與試算表（Google 雲端，可能存放在台灣以外），用來之後以電話或 LINE 提供房地產、命理諮詢等資訊；只有阿良看得到、不提供給其他人，保存到你要求刪除或不再需要聯絡為止。要查詢、更正、停止聯絡或刪除，請打 0975-715-071 或傳 LINE @house168168 給阿良；完整說明在留資料的視窗裡。你的生日與時辰不會送出。</li>
       </ul>
     </section>
     <div class="sign">
@@ -262,7 +263,8 @@
   </div>
 </div>
 
-<script src="vendor/iztro.min.js?v=e69bf8b5"></script>
-<script type="module" src="app.js?v=e69bf8b5"></script>
+<script src="vendor/iztro.min.js?v=b40aa440"></script>
+<script type="module" src="lead.js?v=b40aa440"></script>
+<script type="module" src="app.js?v=b40aa440"></script>
 </body>
 </html>

@@ -1,13 +1,15 @@
 /* 紫微斗數 免費排盤（網頁版）— 主程式
- * 全部在訪客自己的瀏覽器裡算：不連網、不存任何東西（沒有 cookie、沒有瀏覽器儲存、網址不帶生日）。
+ * 排盤全部在訪客自己的瀏覽器裡算：生日不上傳、不存任何東西（沒有 cookie、沒有瀏覽器儲存、網址不帶生日）。
  * 重新整理就清空，這是故意的。
+ * 唯一會送出去的：排盤前的留資料視窗（lead.js，只有網頁版載入），只送姓名（稱呼）、電話、來源、同意版本
+ * 到劉益良的 Google 表單；生日、時辰、暱稱一律不送。預覽與測試網址只乾跑、不送。
  */
-import { buildChart } from './lib/chart.js?v=e69bf8b5';
-import { analyze } from './lib/analyze.js?v=e69bf8b5';
-import { renderReport } from './lib/report.js?v=e69bf8b5';
-import { buildNarration } from './lib/narrate.js?v=e69bf8b5';
-import { radarChart, palaceStarChart, lifeCurve, barChart, attachTooltips, extremes, topWithTies, lifePicks, LIFE_PICK_MAX_START } from './charts.js?v=e69bf8b5';
-import { createSpeaker } from './speak.js?v=e69bf8b5';
+import { buildChart } from './lib/chart.js?v=b40aa440';
+import { analyze } from './lib/analyze.js?v=b40aa440';
+import { renderReport } from './lib/report.js?v=b40aa440';
+import { buildNarration } from './lib/narrate.js?v=b40aa440';
+import { radarChart, palaceStarChart, lifeCurve, barChart, attachTooltips, extremes, topWithTies, lifePicks, LIFE_PICK_MAX_START } from './charts.js?v=b40aa440';
+import { createSpeaker } from './speak.js?v=b40aa440';
 
 /* ───────── 常數 ───────── */
 
@@ -282,11 +284,30 @@ function chartFail(text) {
   if (el && el.getBoundingClientRect().top < 0) el.scrollIntoView({ block: 'center' });
 }
 
-function startChart() {
+// 留資料視窗開著時，不要重複排盤（例如連按兩次）
+let leadWaiting = false;
+
+async function startChart() {
+  if (leadWaiting) return;
   formError('');
   const f = readForm();
   if (f.error) { chartFail(f.error); return; }
   const btn = $('#btn-go');
+  // 網頁版：生日驗證通過後、開始排盤前，先請客人留姓名電話（lead.js）。
+  // 這次開頁已經留過就直接放行；客人取消就不排，按鈕維持「開始排盤」。
+  if (window.__leadGate) {
+    leadWaiting = true;
+    let go = false;
+    try {
+      go = await window.__leadGate();
+    } catch (e) {
+      console.warn('留資料視窗出錯', e);
+      formError('留資料的視窗沒有開起來，請重新整理這一頁再試一次。');
+    } finally {
+      leadWaiting = false;
+    }
+    if (!go) { btn.disabled = false; btn.textContent = '開始排盤'; return; }
+  }
   btn.disabled = true;
   btn.textContent = '排盤中…';
   // 讓「排盤中」先畫出來再算
